@@ -124,16 +124,18 @@ Take the populated prompt text and the completion promise from the workflow conf
 
 Determine max_iterations: use CLI override if provided, otherwise use config default.
 
-Run the setup script:
+Now use the Bash tool to call the setup script with the ACTUAL computed values from previous steps. Do NOT use placeholder text — substitute real values:
 
-```!
-"${CLAUDE_PLUGIN_ROOT}/scripts/setup-ralphmad.sh" POPULATED_PROMPT --completion-promise "PROMISE" --max-iterations N
+```
+"${CLAUDE_PLUGIN_ROOT}/scripts/setup-ralphmad.sh" <ACTUAL_POPULATED_PROMPT> --completion-promise "<ACTUAL_PROMISE>" --max-iterations <ACTUAL_NUMBER>
 ```
 
-Where:
-- POPULATED_PROMPT is the fully populated template content
-- PROMISE is the completion promise from the workflow config
-- N is the max_iterations value
+Substitution rules:
+- Replace `<ACTUAL_POPULATED_PROMPT>` with the fully populated template text from Step 6
+- Replace `<ACTUAL_PROMISE>` with the `promise` string from the workflow config (Step 2)
+- Replace `<ACTUAL_NUMBER>` with the resolved max_iterations integer (CLI override from Step 1, or config default from Step 2)
+
+IMPORTANT: All three values MUST be real values, not placeholders. The script validates that max-iterations is a number and will reject literal text like "N".
 
 Then follow the populated prompt instructions exactly, maintaining the specified persona throughout.
 
