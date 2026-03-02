@@ -24,18 +24,22 @@ This creates the `_bmad/` directory with workflows, agents, and config. After in
 
 ### 2. Install the RalphMAD plugin
 
+From your terminal (non-interactive):
 ```bash
-# Add the RalphMAD marketplace
-/plugin marketplace add hieutrtr/ralphmad
+claude plugin marketplace add hieutrtr/ralphmad
+claude plugin install ralphmad@ralphmad
+```
 
-# Install the plugin
+Or from inside a Claude Code session:
+```
+/plugin marketplace add hieutrtr/ralphmad
 /plugin install ralphmad
 ```
 
 For local development:
 ```bash
-/plugin marketplace add ./ralphmad
-/plugin install ralphmad
+claude plugin marketplace add ./ralphmad
+claude plugin install ralphmad@ralphmad --scope local
 ```
 
 ### 3. Create your product concept
