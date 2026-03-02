@@ -4,14 +4,23 @@ RalphMAD is a Claude Code plugin that combines the [Ralph Loop](https://ghuntley
 
 ## Quick Start
 
-### 1. Install the plugin
+### 1. Add the marketplace & install
 
 ```bash
-# From GitHub
-/plugins install github:hieutrtr/ralphmad
+# Step 1: Add the RalphMAD marketplace
+/plugin marketplace add hieutrtr/ralphmad
 
-# Or local development
-/plugins install /path/to/ralphmad
+# Step 2: Install the plugin
+/plugin install ralphmad
+```
+
+For local development:
+```bash
+# Add from local path
+/plugin marketplace add ./ralphmad
+
+# Install
+/plugin install ralphmad
 ```
 
 ### 2. Set up your project
@@ -19,7 +28,7 @@ RalphMAD is a Claude Code plugin that combines the [Ralph Loop](https://ghuntley
 Ensure your project has BMAD installed (`_bmad/` directory) with a config at `_bmad/bmm/config.yaml`.
 
 For the first workflow (product-brief), create `docs/product-concept.md` describing your product idea.
-See `templates/product-concept-template.md` for a starter template.
+See `plugins/templates/product-concept-template.md` for a starter template.
 
 ### 3. Check status
 
@@ -86,28 +95,33 @@ This means the same templates work with any BMAD-enabled project.
 
 RalphMAD uses a separate state file (`.claude/ralphmad-loop.local.md`) from ralph-loop (`.claude/ralph-loop.local.md`), so both plugins can be installed simultaneously.
 
-## Project Structure
+## Repository Structure
 
 ```
-ralphmad/
+ralphmad/                          # GitHub repo / marketplace root
   .claude-plugin/
-    plugin.json                  # Plugin metadata
-  commands/
-    ralphmad-loop.md             # Main workflow runner
-    ralphmad-status.md           # Status checker
-    ralphmad-cancel.md           # Cancel active loop
-    help.md                      # Plugin documentation
-  hooks/
-    hooks.json                   # Stop hook configuration
-    stop-hook.sh                 # Stop hook script
-  scripts/
-    setup-ralphmad.sh            # Loop state file creator
-  templates/
-    ralphmad-config.yaml         # Workflow registry
-    _base-workflow.tpl.md        # Template reference
-    01-product-brief.tpl.md      # through
-    12-correct-course.tpl.md     # 12 workflow templates
-    product-concept-template.md  # Starter for new projects
+    marketplace.json               # Marketplace manifest
+  plugins/                         # Plugin content
+    .claude-plugin/
+      plugin.json                  # Plugin metadata
+    commands/
+      ralphmad-loop.md             # Main workflow runner
+      ralphmad-status.md           # Status checker
+      ralphmad-cancel.md           # Cancel active loop
+      help.md                      # Plugin documentation
+    hooks/
+      hooks.json                   # Stop hook configuration
+      stop-hook.sh                 # Stop hook script
+    scripts/
+      setup-ralphmad.sh            # Loop state file creator
+    templates/
+      ralphmad-config.yaml         # Workflow registry
+      _base-workflow.tpl.md        # Template reference
+      01-product-brief.tpl.md      # through
+      12-correct-course.tpl.md     # 12 workflow templates
+      product-concept-template.md  # Starter for new projects
+  README.md
+  LICENSE
 ```
 
 ## Prerequisites
