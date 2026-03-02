@@ -17,20 +17,21 @@ When the workflow requests user input or presents a menu:
 - **If asking for documents**: Confirm using the product concept defined above as the primary source
 - **If asking for vision/problem**: Use the Problem statement and Core Capabilities from the concept
 - **If asking for target users**: Use the Target Users section from the concept
-- **If asking for success metrics**: Derive from the product goals — adoption metrics, usage metrics, quality metrics, community metrics as appropriate
+- **If asking for success metrics**: Derive from the product goals
 - **If asking for MVP scope**: Use the MVP Scope section from the concept
 - **If asking for business model**: Use the Business Model section from the concept
 - **If asking for technical requirements**: Use the Technical Stack section from the concept
 - **If asking for anything else**: Synthesize the best answer from the product concept above
 
-### Workflow Step Mapping
-| Workflow Step | Source |
-|---------------|--------|
-| step-01-init | Load product concept above, confirm as input |
-| step-02-vision | Problem statement + Core Capabilities as the vision |
-| step-03-users | Target Users from the concept |
+### Step Mapping
+
+| Workflow Step | Auto-Response Strategy |
+|---------------|------------------------|
+| step-01-init | Confirm product concept as input |
+| step-02-vision | Extract problem + core capabilities as vision |
+| step-03-users | Extract target users from concept |
 | step-04-metrics | Derive success metrics from product goals |
-| step-05-scope | MVP Scope + Technical Stack + roadmap |
+| step-05-scope | Use MVP scope + tech stack from concept |
 | step-06-complete | Finalize and save |
 
 ### Output Files

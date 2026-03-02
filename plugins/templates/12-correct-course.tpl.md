@@ -32,68 +32,32 @@ When the workflow requests user input or presents options:
 - **If asking to review**: Respond 'c' to continue
 - **If asking yes/no/revise**: Respond 'yes' to approve
 
-### Step-by-Step Mapping (6 Steps)
+### Step Mapping (6 Steps)
 
 | Step | Focus | Auto-Response Strategy |
 |------|-------|------------------------|
-| step-1 | Initialize Change Navigation | Provide change trigger, confirm documents, select 'Incremental' mode |
-| step-0.5 | Discover and Load Documents | Auto-discover from planning-artifacts folder |
-| step-2 | Execute Change Analysis Checklist | Work through each checklist section systematically |
-| step-3 | Draft Specific Change Proposals | Create explicit edit proposals for each artifact |
-| step-4 | Generate Sprint Change Proposal | Compile comprehensive proposal document |
+| step-1 | Initialize Change Navigation | Provide trigger, confirm docs, select 'Incremental' |
+| step-0.5 | Discover and Load Docs | Auto-discover from planning-artifacts folder |
+| step-2 | Change Analysis Checklist | Work through each section systematically |
+| step-3 | Draft Change Proposals | Create explicit edit proposals per artifact |
+| step-4 | Sprint Change Proposal | Compile comprehensive proposal document |
 | step-5 | Finalize and Route | Approve proposal, determine scope, handoff |
 | step-6 | Workflow Completion | Summarize and confirm deliverables |
 
-### Checklist Section Guidance
+{{#if functional_requirements_summary}}
+### Functional Requirements
+{{functional_requirements_summary}}
+{{/if}}
 
-**Section 1 - Trigger and Context:**
-- Describe the scope of the change
-- Categorize the change type
-- Document the evidence
+{{#if epic_structure}}
+### Epic Structure
+{{epic_structure}}
+{{/if}}
 
-**Section 2 - Epic Impact Assessment:**
-- For each epic, assess impact level (PRIMARY, MODERATE, NONE, NEW SCOPE)
-- Identify architectural changes needed
-
-**Section 3 - Artifact Conflict Analysis:**
-- Check PRD, Architecture, UI/UX, Deployment for needed updates
-- Flag conflicts between current state and desired state
-
-**Section 4 - Path Forward Evaluation:**
-- Direct Adjustment: Issue can be addressed within current epic structure
-- Potential Rollback: Reverting work simplifies the solution
-- MVP Review: Original scope is no longer achievable or valuable
-
-**Section 5 - Proposal Components:**
-- Summarize the issue
-- List all impacts
-- Recommend approach
-- Define handoff
-
-**Section 6 - Final Review:**
-- Verify completeness and approve
-
-### Change Proposal Format
-When drafting edit proposals (Step 3), use this format:
-
-[FORMAT]
-Story: [STORY-ID] Story Title
-Section: [Acceptance Criteria / Technical Notes / etc.]
-
-OLD:
-- Original content here
-
-NEW:
-- Modified content here
-
-Rationale: Why this change is needed
-[/FORMAT]
-
-### Scope Classification (Step 5)
-Based on analysis, classify as:
-- **Minor**: Direct implementation by dev team (story-level changes only)
-- **Moderate**: Backlog reorganization needed (epic-level changes, PO/SM coordination)
-- **Major**: Fundamental replan required (PRD/Architecture changes, PM/Architect involvement)
+{{#if tech_decisions}}
+### Technology Decisions
+{{tech_decisions}}
+{{/if}}
 
 ### Output Files
 - Sprint Change Proposal: {{planning_artifacts}}/sprint-change-proposal-{date}.md
@@ -111,8 +75,5 @@ Output <promise>{{completion_promise}}</promise> when:
 - Follow workflow step-file architecture strictly (NEVER skip steps)
 - Work through checklist items systematically - don't rush
 - Be factual, not blame-oriented when analyzing issues
-- Handle changes professionally as opportunities to improve
 - Provide specific, actionable change proposals with before/after
 - NO time estimates - focus on what needs to change and why
-- If evidence is lacking, note it as [!] Action-needed
-- Ensure all proposals include clear rationale

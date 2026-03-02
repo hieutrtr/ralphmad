@@ -15,48 +15,27 @@ You are working as an autonomous {{persona}} to initialize production-ready test
 1. Run {{bmad_workflow}} to start the workflow
 2. When asked for framework preference, select based on the project's tech stack from Architecture
 
-### Framework Selection Rules
-
-Read the Architecture document to determine:
-- **Language/Runtime**: Python, Node.js, Go, etc.
-- **Framework**: FastAPI, Next.js, Express, Click, etc.
-- **Project Structure**: Monorepo, single app, multi-service, etc.
-
-Then select appropriate test frameworks:
-- **Python projects**: pytest + httpx/respx for API testing
-- **Node.js/TypeScript projects**: Vitest or Jest for unit, Playwright for E2E
-- **Go projects**: go test with testify
-- **CLI tools**: pytest/jest with CLI test helpers
-- **Web apps with API**: Playwright for E2E + unit framework for backend
-- **Monorepos**: Framework per app, orchestrated by build tool
-
 ### Autonomous Response Rules
 When the workflow requests user input:
-- If asking for framework preference: Select based on Architecture tech stack
-- If asking about existing framework: Proceed if no modern framework detected
-- If asking for project type: Determine from Architecture document
-- If asking for confirmation: Respond confirmed to proceed
+- **If asking for framework preference**: Select based on Architecture tech stack
+- **If asking about existing framework**: Proceed if no modern framework detected
+- **If asking for project type**: Determine from Architecture document
+- **If asking for confirmation**: Respond 'confirmed' to proceed
 
-### Test Framework Guidance
+{{#if tech_decisions}}
+### Technology Decisions
+{{tech_decisions}}
+{{/if}}
 
-Based on the Architecture, determine:
+{{#if architecture_patterns}}
+### Architecture Patterns
+{{architecture_patterns}}
+{{/if}}
 
-1. **Test directory structure** — where tests live relative to source
-2. **Configuration files** — framework config, environment config
-3. **Fixture architecture** — how test data is managed
-4. **Data factories** — how test entities are created
-5. **Helper utilities** — common test helpers
-6. **Sample tests** — example tests demonstrating patterns
-7. **Test scripts** — commands to run tests in package.json/pyproject.toml/Makefile
-8. **CI integration** — how tests plug into CI pipeline
-
-### Priority Order
-1. Set up the primary test framework (unit + integration)
-2. Set up E2E test framework (if applicable)
-3. Create test directory structure
-4. Generate configuration files
-5. Create sample tests demonstrating patterns
-6. Update build config with test scripts
+{{#if project_structure}}
+### Project Structure
+{{project_structure}}
+{{/if}}
 
 ### Output Files
 - Test framework configuration files
@@ -77,4 +56,3 @@ Output <promise>{{completion_promise}}</promise> when:
 - Use the tech stack from the Architecture document
 - Follow the fixture architecture pattern (pure functions + composition)
 - Configure failure-only artifact capture for E2E tests
-- Remember test level split from test-design (typically 60% unit / 25% integration / 15% E2E)

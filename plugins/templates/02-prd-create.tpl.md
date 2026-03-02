@@ -16,7 +16,7 @@ When the workflow requests user input or presents a menu:
 - **If asking for documents**: Confirm the product brief as the primary source
 - **If asking for confirmation**: Respond with 'yes' or 'confirmed' to proceed
 
-### Step-by-Step Mapping (12 Steps)
+### Step Mapping (12 Steps)
 
 | Step | Focus | Auto-Response Strategy |
 |------|-------|------------------------|
@@ -28,40 +28,10 @@ When the workflow requests user input or presents a menu:
 | step-06-innovation | Innovation Analysis | Use Key Differentiators from brief |
 | step-07-project-type | Project Type | Identify project type from brief context |
 | step-08-scoping | Scope Definition | MVP scope from brief, post-MVP deferred |
-| step-09-functional | Functional Requirements | Extract from MVP features in brief |
-| step-10-nonfunctional | Non-Functional Requirements | Derive from KPIs and Technical Stack in brief |
+| step-09-functional | Functional Reqs | Extract from MVP features in brief |
+| step-10-nonfunctional | Non-Functional Reqs | Derive from KPIs and tech stack in brief |
 | step-11-polish | Document Polish | Follow polish instructions, confirm changes |
 | step-12-complete | Completion | Finalize, skip validation for now |
-
-### Content Extraction Guide
-
-**For Discovery (step-02):**
-- Read the product brief to extract the problem statement, solution vision, and core capabilities
-- Summarize the product's unique value proposition
-
-**For Success Criteria (step-03):**
-- Extract user metrics and business objectives from the product brief
-- Derive KPIs appropriate to the project type
-
-**For User Journeys (step-04):**
-- Map personas from the product brief
-- Create user journey flows for each persona
-
-**For Domain Model (step-05):**
-- Extract core entities from the product's capabilities
-- Define relationships and data flows
-
-**For Innovation (step-06):**
-- Identify key differentiators from the product brief
-- Analyze competitive advantages
-
-**For Functional Requirements (step-09):**
-- Extract MVP feature requirements from the brief
-- Organize by capability area
-
-**For Non-Functional Requirements (step-10):**
-- Derive performance, security, compatibility requirements
-- Base on the technical stack and target users from the brief
 
 {{#if product_description}}
 ### Project Context
@@ -82,6 +52,5 @@ Output <promise>{{completion_promise}}</promise> when:
 - Maintain the {{persona}} persona throughout
 - Follow workflow step-file architecture strictly (NEVER skip steps)
 - ALWAYS select 'C' to continue when menus are presented
-- Use product brief as PRIMARY source
+- Use product brief as PRIMARY source for all content
 - When elaboration needed, synthesize from the product brief consistently
-- MVP scope from the brief defines what's in and what's deferred to post-MVP

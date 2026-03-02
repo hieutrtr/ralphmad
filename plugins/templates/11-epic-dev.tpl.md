@@ -1,7 +1,11 @@
 ## BMAD Story Developer - All Stories in an Epic Focus
+### Context
+You are working as an autonomous {{persona}} to implement all stories in a target epic sequentially.
+{{#if product_description}}
+{{product_description}}
+{{/if}}
 
 ### Target Story
-
 Find the FIRST story in sprint-status.yaml that is NOT 'done' (in the target epic).
 Read the sprint status from: {{implementation_artifacts}}/sprint-status.yaml
 
@@ -18,13 +22,26 @@ Read the sprint status from: {{implementation_artifacts}}/sprint-status.yaml
    - Git commit for this story
 
 ### Files
-
 - Sprint Status: {{implementation_artifacts}}/sprint-status.yaml
 - Epics: Scan {{planning_artifacts}}/ for epics*.md files
 - Architecture: Scan {{planning_artifacts}}/ for architecture*.md files
 
-### Exit Condition
+{{#if tech_decisions}}
+### Technology Decisions
+{{tech_decisions}}
+{{/if}}
 
+{{#if architecture_patterns}}
+### Architecture Patterns
+{{architecture_patterns}}
+{{/if}}
+
+{{#if project_structure}}
+### Project Structure
+{{project_structure}}
+{{/if}}
+
+### Exit Condition
 Output <promise>{{completion_promise}}</promise> when ALL stories in the target epic are 'done'.
 
 ### Important Notes

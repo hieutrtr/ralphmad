@@ -14,50 +14,14 @@ You are working as an autonomous {{persona}} to generate sprint status tracking.
 
 ### Autonomous Response Rules
 When the workflow requests user input:
-- If asking for confirmation: Respond 'confirmed' to proceed
-- If asking about epic files: Confirm discovered files are correct
-- If asking about validation: Confirm all checks pass
+- **If asking for confirmation**: Respond 'confirmed' to proceed
+- **If asking about epic files**: Confirm discovered files are correct
+- **If asking about validation**: Confirm all checks pass
 
-### Workflow Steps
-
-STEP 1 - PARSE EPIC FILES:
-- Discover all files matching *epic*.md pattern in {{planning_artifacts}}/
-- Could be single epics.md or multiple epic-1.md, epic-2.md files
-- Extract epic numbers from headers (## Epic 0:, ## Epic 1:, etc.)
-- Extract story IDs and titles (### Story 0.1: Title, ### Story 1.1: Title)
-- Convert to kebab-case keys (e.g., 0-1-initialize-project-structure)
-
-STEP 2 - BUILD SPRINT STATUS STRUCTURE:
-For each epic found, create entries:
-- Epic entry: epic-{num} with status: backlog
-- Story entries: {epic}-{story}-{title} with status: backlog
-- Retrospective entry: epic-{num}-retrospective with status: optional
-
-STEP 3 - APPLY INTELLIGENT STATUS DETECTION:
-- Check if story files exist in {{implementation_artifacts}}/ folder
-- If story file exists: upgrade status to ready-for-dev
-- Preserve more advanced statuses (never downgrade)
-
-STEP 4 - GENERATE SPRINT-STATUS.YAML:
-Create file at: {{implementation_artifacts}}/sprint-status.yaml
-
-STEP 5 - VALIDATE AND REPORT:
-- Every epic appears in status file
-- Every story appears in status file
-- Every epic has retrospective entry
-- All status values are legal
-- File is valid YAML
-
-### Status State Machine
-
-Epic Status Flow:
-backlog -> in-progress -> done
-
-Story Status Flow:
-backlog -> ready-for-dev -> in-progress -> review -> done
-
-Retrospective Status:
-optional <-> done
+{{#if epic_structure}}
+### Epic Structure
+{{epic_structure}}
+{{/if}}
 
 ### Output Files
 - Sprint Status: {{implementation_artifacts}}/sprint-status.yaml

@@ -61,6 +61,16 @@ For each item in the workflow's `prerequisites` list:
    - Which workflow should be run first to produce them
    - Example: "Missing: prd. Run `/ralphmad-loop:ralphmad-loop prd-create` first."
 
+## Template Philosophy: Thin Wrappers
+
+Templates are thin wrappers (~30-50 lines) that provide **project context** (data) so the AI
+can answer workflow questions. Templates do NOT duplicate **workflow logic** — the BMAD workflow
+step files already contain all instructions, templates, scoring rules, and formats.
+
+If a template contains step-by-step execution instructions, risk scoring formulas, story templates,
+framework selection rules, or content extraction guides, it is over-engineered and will cause the
+workflow to malfunction (template instructions conflict with the workflow's own steps).
+
 ## Step 5: Discover & Extract Context
 
 Scan the planning and implementation artifact directories for existing artifacts.

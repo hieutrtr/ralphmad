@@ -23,47 +23,29 @@ When the workflow requests user input or presents a menu:
 - **If asking for approval**: Respond 'yes, approved' to proceed
 - **If asking for confirmation**: Respond 'confirmed' to proceed
 
-### Step-by-Step Mapping (4 Steps)
+### Step Mapping (4 Steps)
 
-Step 01 - step-01-validate-prerequisites: Validate Docs and Extract Requirements. Confirm docs, extract all FRs and NFRs.
-Step 02 - step-02-design-epics: Design Epic List. Approve epic structure covering all FRs.
-Step 03 - step-03-create-stories: Create User Stories. Approve stories for each epic.
-Step 04 - step-04-final-validation: Coverage Validation. Confirm all FRs are covered by stories.
+| Step | Focus | Auto-Response Strategy |
+|------|-------|------------------------|
+| step-01-validate-prerequisites | Validate Docs + Extract Reqs | Confirm docs, extract FRs/NFRs |
+| step-02-design-epics | Design Epic List | Approve epic structure covering all FRs |
+| step-03-create-stories | Create User Stories | Approve stories for each epic |
+| step-04-final-validation | Coverage Validation | Confirm all FRs covered |
 
-### Epic Design Guidance
+{{#if functional_requirements_summary}}
+### Functional Requirements
+{{functional_requirements_summary}}
+{{/if}}
 
-Design epics based on:
-- **PRD functional requirements** — group related FRs into user-value-oriented epics
-- **Architecture patterns** — respect the architectural layers and patterns
-- **User personas** — each epic should deliver value to at least one persona
+{{#if tech_decisions}}
+### Technology Decisions
+{{tech_decisions}}
+{{/if}}
 
-**Epic Structure Principles:**
-- Epic 0 should be Project Foundation (scaffolding, build system, CI)
-- Subsequent epics should be organized by USER VALUE, not technical layers
-- Each epic must be STANDALONE and deliver complete user value
-- Stories must only depend on PREVIOUS stories, never future ones
-
-### Story Template (Use This Format)
-
-For each story:
-- **Story X.Y: [Title]**
-- **User Story:** As a [persona], I want to [action] so that [benefit]
-- **FRs Covered:** FRx, FRy
-- **Acceptance Criteria:**
-  - AC1: Given [context], when [action], then [result]
-  - AC2: ...
-- **Technical Notes:** [Implementation hints from architecture]
-- **Dependencies:** Story X.Z (only reference PREVIOUS stories)
-
-### Dependency Rules (CRITICAL)
-
-- Each epic must be STANDALONE and deliver complete user value
-- Stories must only depend on PREVIOUS stories, never future ones
-- Epic 0 Story 1 MUST be project scaffold/setup
-- NO big upfront technical work — incremental delivery
-- Follow architecture patterns exactly
-- Write tests for each story
-- Each story must be completable by a single dev agent
+{{#if epic_structure}}
+### Epic Structure
+{{epic_structure}}
+{{/if}}
 
 ### Output Files
 - Epics: {{planning_artifacts}}/epics.md (or individual files in epics/ folder)
@@ -81,5 +63,4 @@ Output <promise>{{completion_promise}}</promise> when:
 - ALWAYS select 'C' to continue when A/P/C menus are presented
 - Organize epics by USER VALUE, not technical layers
 - Each story must be completable by a single dev agent
-- Keep acceptance criteria testable and specific
 - Reference Architecture document for technical implementation patterns
