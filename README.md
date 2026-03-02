@@ -22,7 +22,28 @@ npx bmad-method install --modules bmm tea --tools claude-code --yes
 
 This creates the `_bmad/` directory with workflows, agents, and config. After installation, run `/bmad-help` inside Claude Code to verify everything is set up.
 
-### 2. Install the RalphMAD plugin
+### 2. Install RalphMAD
+
+#### Option A: Commands (recommended — works on CLI and cloud)
+
+From your project directory:
+```bash
+# One-liner (clones and installs automatically)
+curl -sL https://raw.githubusercontent.com/hieutrtr/ralphmad/main/install.sh | bash
+
+# Or clone first, then install
+git clone https://github.com/hieutrtr/ralphmad.git /tmp/ralphmad
+/tmp/ralphmad/install.sh .
+```
+
+This installs RalphMAD as commands in `.claude/commands/` and registers the stop hook in `.claude/settings.json`. Works with both Claude Code CLI and Claude Code on claude.ai (cloud sessions).
+
+To uninstall:
+```bash
+/tmp/ralphmad/install.sh --uninstall .
+```
+
+#### Option B: Plugin (CLI only)
 
 From your terminal (non-interactive):
 ```bash
@@ -42,6 +63,8 @@ claude plugin marketplace add ./ralphmad
 claude plugin install ralphmad@ralphmad --scope local
 ```
 
+> **Note**: Plugins are not currently supported in Claude Code cloud sessions (claude.ai). Use Option A for cloud compatibility.
+
 ### 3. Create your product concept
 
 Create `docs/product-concept.md` describing your product idea.
@@ -50,14 +73,16 @@ See `plugins/templates/product-concept-template.md` for a starter template.
 ### 4. Check status & run
 
 ```
-/ralphmad:ralphmad-status
-/ralphmad:ralphmad-loop product-brief
+/ralphmad-status
+/ralphmad-loop product-brief
 ```
+
+> If using the plugin installation (Option B), prefix commands with `ralphmad:` (e.g., `/ralphmad:ralphmad-status`).
 
 ## How It Works
 
 ```
-User invokes: /ralphmad:ralphmad-loop product-brief
+User invokes: /ralphmad-loop product-brief
   → Reads workflow registry (ralphmad-config.yaml)
   → Reads project config (_bmad/bmm/config.yaml)
   → Checks prerequisites (scans for required artifacts)
@@ -87,12 +112,12 @@ User invokes: /ralphmad:ralphmad-loop product-brief
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `/ralphmad:ralphmad-loop WORKFLOW [--max-iterations N]` | Run a workflow |
-| `/ralphmad:ralphmad-status` | Show workflow status |
-| `/ralphmad:ralphmad-cancel` | Cancel active loop |
-| `/ralphmad:help` | Plugin documentation |
+| Command (installed) | Command (plugin) | Description |
+|-------------------|-------------------|-------------|
+| `/ralphmad-loop WORKFLOW [--max-iterations N]` | `/ralphmad:ralphmad-loop ...` | Run a workflow |
+| `/ralphmad-status` | `/ralphmad:ralphmad-status` | Show workflow status |
+| `/ralphmad-cancel` | `/ralphmad:ralphmad-cancel` | Cancel active loop |
+| `/ralphmad-help` | `/ralphmad:help` | Plugin documentation |
 
 ## Template System
 
@@ -111,9 +136,10 @@ RalphMAD uses a separate state file (`.claude/ralphmad-loop.local.md`) from ralp
 
 ```
 ralphmad/                          # GitHub repo / marketplace root
+  install.sh               # Commands installer (CLI + cloud)
   .claude-plugin/
     marketplace.json               # Marketplace manifest
-  plugins/                         # Plugin content
+  plugins/                         # Plugin content (source)
     .claude-plugin/
       plugin.json                  # Plugin metadata
     commands/
