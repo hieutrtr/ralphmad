@@ -1,8 +1,0 @@
-{
-  "name": "ralphmad",
-  "description": "RalphMAD — Autonomous BMAD-METHOD workflow execution via ralph-loop. Templatized prompts that auto-populate from project context for reusable, project-agnostic SDLC automation.",
-  "author": {
-    "name": "Hieutran",
-    "email": ""
-  }
-}

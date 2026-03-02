@@ -1,0 +1,23 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "ralphmad",
+  "description": "RalphMAD — Autonomous BMAD-METHOD workflow execution via ralph-loop with templatized, project-agnostic prompts",
+  "owner": {
+    "name": "Hieutran",
+    "email": ""
+  },
+  "plugins": [
+    {
+      "name": "ralphmad",
+      "description": "RalphMAD — Autonomous BMAD-METHOD workflow execution via ralph-loop. Templatized prompts that auto-populate from project context for reusable, project-agnostic SDLC automation.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Hieutran",
+        "email": ""
+      },
+      "source": "./plugins",
+      "category": "development",
+      "homepage": "https://github.com/hieutrtr/ralphmad"
+    }
+  ]
+}
