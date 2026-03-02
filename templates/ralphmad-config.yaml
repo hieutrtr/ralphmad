@@ -1,0 +1,187 @@
+version: "1.0.0"
+
+workflows:
+  product-brief:
+    template: "01-product-brief.tpl.md"
+    bmad_workflow: "/bmad:bmm:workflows:create-product-brief"
+    promise: "PRODUCT_BRIEF_DONE"
+    persona: "Business Analyst"
+    phase: 1
+    prerequisites: []
+    produces: ["product_brief"]
+    max_iterations: 5
+    artifact_patterns: ["product-brief*.md"]
+
+  prd-create:
+    template: "02-prd-create.tpl.md"
+    bmad_workflow: "/bmad:bmm:workflows:prd -c"
+    promise: "PRD_CREATE_DONE"
+    persona: "Product Manager"
+    phase: 2
+    prerequisites: ["product_brief"]
+    produces: ["prd"]
+    max_iterations: 8
+    artifact_patterns: ["prd.md", "prd-*.md"]
+
+  ux-design:
+    template: "03-ux-design.tpl.md"
+    bmad_workflow: "/bmad:bmm:workflows:create-ux-design"
+    promise: "UX_DESIGN_DONE"
+    persona: "UX Designer"
+    phase: 2
+    prerequisites: ["product_brief", "prd"]
+    produces: ["ux_design"]
+    max_iterations: 10
+    artifact_patterns: ["ux-design*.md"]
+
+  architecture:
+    template: "04-architecture.tpl.md"
+    bmad_workflow: "/bmad:bmm:workflows:create-architecture"
+    promise: "ARCHITECTURE_DONE"
+    persona: "Software Architect"
+    phase: 3
+    prerequisites: ["prd", "ux_design"]
+    produces: ["architecture"]
+    max_iterations: 8
+    artifact_patterns: ["architecture.md", "architecture-*.md"]
+
+  epics-stories:
+    template: "05-epics-stories.tpl.md"
+    bmad_workflow: "/bmad:bmm:workflows:create-epics-and-stories"
+    promise: "EPICS_DONE"
+    persona: "Product Strategist"
+    phase: 3
+    prerequisites: ["prd", "architecture"]
+    produces: ["epics"]
+    max_iterations: 8
+    artifact_patterns: ["epics.md", "epics-*.md"]
+
+  test-design:
+    template: "06-test-design.tpl.md"
+    bmad_workflow: "/bmad:tea:workflows:testarch:test-design"
+    promise: "TEST_DESIGN_DONE"
+    persona: "QA Architect"
+    phase: 3
+    prerequisites: ["architecture", "prd"]
+    produces: ["test_design"]
+    max_iterations: 6
+    artifact_patterns: ["test-design-system.md"]
+
+  testarch-framework:
+    template: "07-testarch-framework.tpl.md"
+    bmad_workflow: "/bmad:tea:workflows:testarch:framework"
+    promise: "TESTARCH_FRAMEWORK_DONE"
+    persona: "QA Architect"
+    phase: 3
+    prerequisites: ["test_design", "architecture"]
+    produces: ["test_framework"]
+    max_iterations: 6
+    artifact_patterns: []
+
+  testarch-ci:
+    template: "08-testarch-ci.tpl.md"
+    bmad_workflow: "/bmad:tea:workflows:testarch:ci"
+    promise: "TESTARCH_CI_DONE"
+    persona: "QA Architect"
+    phase: 3
+    prerequisites: ["test_framework"]
+    produces: ["test_ci"]
+    max_iterations: 6
+    artifact_patterns: []
+
+  sprint-planning:
+    template: "09-sprint-planning.tpl.md"
+    bmad_workflow: "/bmad:bmm:workflows:sprint-planning"
+    promise: "SPRINT_PLANNING_DONE"
+    persona: "Scrum Master"
+    phase: 4
+    prerequisites: ["epics"]
+    produces: ["sprint_status"]
+    max_iterations: 5
+    artifact_patterns: ["sprint-status.yaml"]
+
+  testarch-test-design-epic:
+    template: "10-testarch-test-design-epic.tpl.md"
+    bmad_workflow: "/bmad:tea:workflows:testarch:test-design"
+    promise: "TEST_DESIGN_EPIC_DONE"
+    persona: "QA Architect"
+    phase: 4
+    prerequisites: ["epics", "test_design"]
+    produces: ["test_design_epic"]
+    max_iterations: 6
+    artifact_patterns: ["test-design-epic-*.md"]
+
+  epic-dev:
+    template: "11-epic-dev.tpl.md"
+    promise: "ALL_STORIES_DONE"
+    persona: "Developer"
+    phase: 4
+    prerequisites: ["sprint_status", "epics", "architecture"]
+    produces: ["implementation"]
+    max_iterations: 30
+    artifact_patterns: []
+
+  correct-course:
+    template: "12-correct-course.tpl.md"
+    bmad_workflow: "/bmad:bmm:workflows:correct-course"
+    promise: "CORRECT_COURSE_DONE"
+    persona: "Scrum Master"
+    phase: 4
+    prerequisites: ["sprint_status"]
+    produces: []
+    max_iterations: 5
+    artifact_patterns: []
+
+# Artifact type to discovery pattern mapping
+# Used by the orchestrator to locate existing artifacts for context extraction
+artifact_discovery:
+  product_brief:
+    patterns: ["product-brief*.md"]
+    search_dir: "planning_artifacts"
+    extract_fields: ["product_description", "tagline", "target_users", "mvp_scope", "tech_stack", "business_model", "core_capabilities"]
+
+  prd:
+    patterns: ["prd.md", "prd-*.md"]
+    search_dir: "planning_artifacts"
+    extract_fields: ["functional_requirements", "personas", "domain_model", "success_criteria"]
+
+  ux_design:
+    patterns: ["ux-design*.md"]
+    search_dir: "planning_artifacts"
+    extract_fields: ["design_system", "ux_patterns", "core_interactions", "color_palette"]
+
+  architecture:
+    patterns: ["architecture.md", "architecture-*.md"]
+    search_dir: "planning_artifacts"
+    extract_fields: ["tech_decisions", "patterns", "project_structure", "tech_stack"]
+
+  epics:
+    patterns: ["epics.md", "epics-*.md"]
+    search_dir: "planning_artifacts"
+    extract_fields: ["epic_list", "story_counts", "fr_coverage"]
+
+  test_design:
+    patterns: ["test-design-system.md"]
+    search_dir: "planning_artifacts"
+    extract_fields: ["risk_matrix", "test_levels", "priority_assignment"]
+
+  sprint_status:
+    patterns: ["sprint-status.yaml"]
+    search_dir: "implementation_artifacts"
+    extract_fields: ["epic_statuses", "story_statuses"]
+
+  test_framework:
+    patterns: []
+    search_dir: "project_root"
+    extract_fields: ["test_config_files", "test_directories"]
+
+  test_ci:
+    patterns: [".github/workflows/test.yml"]
+    search_dir: "project_root"
+    extract_fields: ["ci_pipeline"]
+
+phases:
+  1: { name: "Analysis", workflows: ["product-brief"] }
+  2: { name: "Planning", workflows: ["prd-create", "ux-design"] }
+  3: { name: "Solutioning", workflows: ["architecture", "epics-stories", "test-design", "testarch-framework", "testarch-ci"] }
+  4: { name: "Implementation", workflows: ["sprint-planning", "testarch-test-design-epic", "epic-dev", "correct-course"] }

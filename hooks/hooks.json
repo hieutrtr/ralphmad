@@ -1,0 +1,15 @@
+{
+  "description": "RalphMAD plugin stop hook for autonomous BMAD workflow loops",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/stop-hook.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
