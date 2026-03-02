@@ -2,43 +2,51 @@
 
 RalphMAD is a Claude Code plugin that combines the [Ralph Loop](https://ghuntley.com/ralph/) self-referential AI loop technique with [BMAD](https://github.com/bmad-method/bmad-method) structured SDLC workflows. It provides templatized, project-agnostic workflow automation — install once, use with any BMAD-enabled project.
 
+## Prerequisites
+
+- [Claude Code](https://claude.com/claude-code) CLI — RalphMAD is a Claude Code plugin and requires Claude Code to run. Install it first if you haven't already.
+
 ## Quick Start
 
-### 1. Add the marketplace & install
+### 1. Install BMAD Method in your project
+
+Open Claude Code in your project directory and install the BMM + TEA modules:
 
 ```bash
-# Step 1: Add the RalphMAD marketplace
+# Interactive (recommended — follow the prompts, select bmm and tea modules, pick claude-code as tool)
+npx bmad-method install
+
+# Or non-interactive
+npx bmad-method install --modules bmm tea --tools claude-code --yes
+```
+
+This creates the `_bmad/` directory with workflows, agents, and config. After installation, run `/bmad-help` inside Claude Code to verify everything is set up.
+
+### 2. Install the RalphMAD plugin
+
+```bash
+# Add the RalphMAD marketplace
 /plugin marketplace add hieutrtr/ralphmad
 
-# Step 2: Install the plugin
+# Install the plugin
 /plugin install ralphmad
 ```
 
 For local development:
 ```bash
-# Add from local path
 /plugin marketplace add ./ralphmad
-
-# Install
 /plugin install ralphmad
 ```
 
-### 2. Set up your project
+### 3. Create your product concept
 
-Ensure your project has BMAD installed (`_bmad/` directory) with a config at `_bmad/bmm/config.yaml`.
-
-For the first workflow (product-brief), create `docs/product-concept.md` describing your product idea.
+Create `docs/product-concept.md` describing your product idea.
 See `plugins/templates/product-concept-template.md` for a starter template.
 
-### 3. Check status
+### 4. Check status & run
 
 ```
 /ralphmad:ralphmad-status
-```
-
-### 4. Run a workflow
-
-```
 /ralphmad:ralphmad-loop product-brief
 ```
 
@@ -123,12 +131,6 @@ ralphmad/                          # GitHub repo / marketplace root
   README.md
   LICENSE
 ```
-
-## Prerequisites
-
-- [Claude Code](https://claude.com/claude-code) CLI
-- [BMAD Method](https://github.com/bmad-method/bmad-method) installed in your project
-- Project config at `_bmad/bmm/config.yaml`
 
 ## License
 
