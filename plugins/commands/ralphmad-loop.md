@@ -71,45 +71,33 @@ If a template contains step-by-step execution instructions, risk scoring formula
 framework selection rules, or content extraction guides, it is over-engineered and will cause the
 workflow to malfunction (template instructions conflict with the workflow's own steps).
 
-## Step 5: Discover & Extract Context
+## Step 5: Load Template & Discover Required Context
 
-Scan the planning and implementation artifact directories for existing artifacts.
-For each found artifact, read it and extract key context variables:
+First, read the template file: `${CLAUDE_PLUGIN_ROOT}/templates/{template_file}` (from Step 2).
 
-**From product brief** (if exists):
-- `{{product_description}}` — full product description paragraph
-- `{{tagline}}` — product tagline
-- `{{target_users}}` — target user list
-- `{{mvp_scope}}` — MVP scope section
-- `{{tech_stack}}` — technology stack section
-- `{{business_model}}` — business model description
-- `{{core_capabilities}}` — list of core capabilities
+Scan the template for all `{{variable}}` references (including inside `{{#if variable}}` blocks).
+This determines which artifacts you actually need to load — do NOT load artifacts the template doesn't reference.
 
-**From PRD** (if exists):
-- `{{functional_requirements_summary}}` — summarized FRs
-- `{{personas}}` — persona descriptions
-- `{{domain_model}}` — domain model entities
+Use the variable-to-artifact mapping below to identify which source artifacts to read:
 
-**From architecture** (if exists):
-- `{{tech_decisions}}` — key technical decisions
-- `{{architecture_patterns}}` — implementation patterns
-- `{{project_structure}}` — folder/file organization
+| Source Artifact | Provides Variables | Discovery patterns (from `artifact_discovery` in config) |
+|---|---|---|
+| product_brief | product_description, tagline, target_users, mvp_scope, tech_stack, business_model, core_capabilities | `product-brief*.md` in planning_artifacts |
+| prd | functional_requirements_summary, personas, domain_model | `prd.md`, `prd-*.md` in planning_artifacts |
+| architecture | tech_decisions, architecture_patterns, project_structure | `architecture.md`, `architecture-*.md` in planning_artifacts |
+| ux_design | design_system, ux_patterns | `ux-design*.md` in planning_artifacts |
+| epics | epic_structure | `epics.md`, `epics-*.md` in planning_artifacts |
 
-**From UX design** (if exists):
-- `{{design_system}}` — design system choices
-- `{{ux_patterns}}` — UX pattern descriptions
+For each source artifact whose variables appear in the template:
+1. Use the discovery patterns and search directory from `artifact_discovery` in `ralphmad-config.yaml`
+2. Glob for matching files; if found, read and extract only the relevant fields
+3. If not found, the variable stays unset (handled during population)
 
-**From epics** (if exists):
-- `{{epic_structure}}` — epic list with story counts
+Special case: only check for `docs/product-concept.md` if the template references `{{product_concept_full}}`.
 
-Also check for `docs/product-concept.md` for the product-brief bootstrap case.
-If found, set `{{product_concept_full}}` to its full contents.
+## Step 6: Populate Template
 
-## Step 6: Load & Populate Template
-
-Read: `${CLAUDE_PLUGIN_ROOT}/templates/{template_file}` (the template filename from Step 2).
-
-Replace all `{{variable}}` placeholders with the discovered values from Step 5.
+Replace all `{{variable}}` placeholders in the template with the discovered values from Step 5.
 
 For variables that have no discovered value:
 - If the variable is critical (like `{{product_concept_full}}` for product-brief), STOP and tell the user what's missing
