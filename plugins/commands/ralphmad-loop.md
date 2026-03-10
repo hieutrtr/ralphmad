@@ -14,8 +14,8 @@ You are the RalphMAD orchestrator. Follow these steps exactly:
 The first argument is the workflow name. Extract it from: $ARGUMENTS
 
 Valid workflow names: product-brief, prd-create, ux-design, architecture,
-epics-stories, test-design, testarch-framework, testarch-ci,
-sprint-planning, testarch-test-design-epic, epic-dev, correct-course
+shard-architecture, epics-stories, implementation-gaps, test-design, testarch-framework,
+testarch-ci, sprint-planning, testarch-test-design-epic, epic-dev, correct-course
 
 Also extract any `--max-iterations N` if provided (overrides the config default).
 

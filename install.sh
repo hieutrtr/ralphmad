@@ -64,7 +64,7 @@ uninstall() {
 
   if [[ -d "$target_dir/$ASSETS_DIR" ]]; then
     rm -rf "$target_dir/$ASSETS_DIR"
-    ok "Removed $ASSETS_DIR/"
+    ok "Removed $ASSETS_DIR/ (includes templates, scripts, workflows)"
     ((removed++))
   fi
 
@@ -188,6 +188,12 @@ install() {
     rm -f "$concept_tpl.bak"
   fi
   ok "Installed $template_count templates to $ASSETS_DIR/templates/"
+
+  # --- Copy workflows ---
+  if [[ -d "$plugins_dir/workflows" ]]; then
+    cp -r "$plugins_dir/workflows" "$target_dir/$ASSETS_DIR/workflows"
+    ok "Installed workflows to $ASSETS_DIR/workflows/"
+  fi
 
   # --- Copy scripts ---
   cp "$plugins_dir/scripts/setup-ralphmad.sh" "$target_dir/$ASSETS_DIR/scripts/setup-ralphmad.sh"

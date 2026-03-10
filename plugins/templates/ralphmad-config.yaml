@@ -132,6 +132,28 @@ workflows:
     max_iterations: 5
     artifact_patterns: []
 
+  implementation-gaps:
+    template: "14-implementation-gaps.tpl.md"
+    bmad_workflow: ".claude/ralphmad/workflows/implementation-gaps-analysis/workflow.md"
+    promise: "IMPLEMENTATION_GAPS_DONE"
+    persona: "Staff Engineer and Technical Program Manager"
+    phase: 3
+    prerequisites: ["architecture", "epics"]
+    produces: ["implementation_gaps"]
+    max_iterations: 8
+    artifact_patterns: ["implementation-gaps-report*.md"]
+
+  shard-architecture:
+    template: "13-shard-architecture.tpl.md"
+    bmad_workflow: ".claude/ralphmad/workflows/shard-architecture/workflow.md"
+    promise: "SHARD_ARCHITECTURE_DONE"
+    persona: "Architecture Document Specialist"
+    phase: 3
+    prerequisites: ["architecture"]
+    produces: ["architecture_shards"]
+    max_iterations: 10
+    artifact_patterns: ["high-level-design*.md", "tech-stack*.md", "detailed-design*.md", "sequence-diagrams*.md", "deployment*.md", "network*.md", "database-design*.md"]
+
 # Artifact type to discovery pattern mapping
 # Used by the orchestrator to locate existing artifacts for context extraction
 artifact_discovery:
@@ -183,5 +205,5 @@ artifact_discovery:
 phases:
   1: { name: "Analysis", workflows: ["product-brief"] }
   2: { name: "Planning", workflows: ["prd-create", "ux-design"] }
-  3: { name: "Solutioning", workflows: ["architecture", "epics-stories", "test-design", "testarch-framework", "testarch-ci"] }
+  3: { name: "Solutioning", workflows: ["architecture", "shard-architecture", "epics-stories", "implementation-gaps", "test-design", "testarch-framework", "testarch-ci"] }
   4: { name: "Implementation", workflows: ["sprint-planning", "testarch-test-design-epic", "epic-dev", "correct-course"] }
