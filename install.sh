@@ -58,21 +58,21 @@ uninstall() {
     if [[ -f "$cmd_file" ]]; then
       rm "$cmd_file"
       ok "Removed $COMMANDS_DIR/$cmd.md"
-      ((removed++))
+      removed=$((removed + 1))
     fi
   done
 
   if [[ -d "$target_dir/$ASSETS_DIR" ]]; then
     rm -rf "$target_dir/$ASSETS_DIR"
     ok "Removed $ASSETS_DIR/ (includes templates, scripts, workflows)"
-    ((removed++))
+    removed=$((removed + 1))
   fi
 
   local hook_script="$target_dir/$SCRIPTS_ROOT/ralphmad-stop-hook.sh"
   if [[ -f "$hook_script" ]]; then
     rm "$hook_script"
     ok "Removed $SCRIPTS_ROOT/ralphmad-stop-hook.sh"
-    ((removed++))
+    removed=$((removed + 1))
   fi
 
   # Remove stop hook from settings.json
@@ -87,7 +87,7 @@ uninstall() {
       ' "$settings")
       echo "$updated" > "$settings"
       ok "Removed stop hook from $SETTINGS_FILE"
-      ((removed++))
+      removed=$((removed + 1))
     fi
   fi
 
@@ -176,7 +176,7 @@ install() {
     local filename
     filename="$(basename "$tpl")"
     cp "$tpl" "$target_dir/$ASSETS_DIR/templates/$filename"
-    ((template_count++))
+    template_count=$((template_count + 1))
   done
   # Transform namespace references in product-concept-template.md
   local concept_tpl="$target_dir/$ASSETS_DIR/templates/product-concept-template.md"
