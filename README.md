@@ -107,7 +107,7 @@ User invokes: /ralphmad-loop product-brief
 | 3 | CI/CD | `testarch-ci` | Set up CI/CD pipeline |
 | 4 | Sprint Planning | `sprint-planning` | Generate sprint status tracking |
 | 4 | Epic Test Design | `testarch-test-design-epic` | Test design for specific epic |
-| 4 | Epic Dev | `epic-dev` | Implement all stories in an epic |
+| 4 | Epic Dev | `epic-dev` | Implement all stories in an epic (auto-fixes high+medium test issues) |
 | 4 | Correct Course | `correct-course` | Manage sprint changes |
 
 ## Commands
@@ -127,6 +127,19 @@ Templates use `{{placeholder}}` syntax and are populated at runtime from:
 - **Workflow config** (`ralphmad-config.yaml`) — promises, personas, prerequisites
 
 This means the same templates work with any BMAD-enabled project.
+
+### Configurable Options
+
+The `epic-dev` workflow supports an `autofix_severity` option in `ralphmad-config.yaml`:
+
+```yaml
+epic-dev:
+  # ...
+  autofix_severity: "high and medium"   # default — auto-fix high+medium, log low as warnings
+  # autofix_severity: "all"             # auto-fix all severity levels without prompting
+```
+
+This controls which test issue severities are automatically fixed during the autonomous loop. By default, only high and medium severity issues are auto-fixed to keep the loop running, while low severity issues are logged as warnings. Set to `"all"` to auto-fix every severity level.
 
 ## Coexistence with Ralph Loop
 

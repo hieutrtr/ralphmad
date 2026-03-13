@@ -9,6 +9,15 @@ You are working as an autonomous {{persona}} to implement all stories in a targe
 Find the FIRST story in sprint-status.yaml that is NOT 'done' (in the target epic).
 Read the sprint status from: {{implementation_artifacts}}/sprint-status.yaml
 
+### Autonomous Response Rules
+When the workflow requests user input or presents a menu:
+- **If menu has 'C' (Continue)**: Automatically select 'C' to proceed
+- **If menu has A/P/C options**: Always select 'C' (Continue)
+- **If asking for documents**: Confirm the discovered documents as sources
+- **If asking for confirmation**: Respond 'yes' or 'confirmed' to proceed
+- **If asking about test issues**: Auto-fix {{#if autofix_severity}}{{autofix_severity}}{{else}}high and medium{{/if}} severity issues automatically, log low severity issues as warnings without blocking
+- **If asking whether to fix or raise issues**: Choose 'fix automatically' for {{#if autofix_severity}}{{autofix_severity}}{{else}}high and medium{{/if}} severity, skip low severity
+
 ### Workflow Steps (execute in order)
 
 1. If status is 'backlog': Run /bmad:bmm:workflows:create-story for this story
@@ -46,6 +55,7 @@ Output <promise>{{completion_promise}}</promise> when ALL stories in the target 
 
 ### Important Notes
 - Maintain the {{persona}} persona throughout
+- ALWAYS select 'C' to continue when A/P/C menus are presented
 - Process stories in order (lowest story number first)
 - Update sprint-status.yaml after each story status change
 - Follow the architecture patterns from the architecture document

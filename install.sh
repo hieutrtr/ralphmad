@@ -176,7 +176,7 @@ install() {
     local filename
     filename="$(basename "$tpl")"
     cp "$tpl" "$target_dir/$ASSETS_DIR/templates/$filename"
-    ((template_count++))
+    template_count=$((template_count + 1))
   done
   # Transform namespace references in product-concept-template.md
   local concept_tpl="$target_dir/$ASSETS_DIR/templates/product-concept-template.md"
