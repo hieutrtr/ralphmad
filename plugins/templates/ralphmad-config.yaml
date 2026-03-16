@@ -120,6 +120,10 @@ workflows:
     produces: ["implementation"]
     max_iterations: 30
     artifact_patterns: []
+    # Controls which test issue severities are auto-fixed during the loop.
+    # Default: "high and medium" — low severity issues are logged as warnings.
+    # Set to "all" to auto-fix every severity level without prompting.
+    autofix_severity: "high and medium"
 
   correct-course:
     template: "12-correct-course.tpl.md"
